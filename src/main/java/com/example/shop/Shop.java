@@ -54,7 +54,12 @@ public abstract class Shop {
 
         try {
             input = Integer.parseInt(scanner.nextLine().trim());
+
+            if (input < 0 || input > 2) {
+                System.out.println("\nWrong input\n");
+            }
         } catch (NumberFormatException e) {
+            System.out.println("\nWrong input\n");
             return -1;
         }
 
@@ -72,16 +77,12 @@ public abstract class Shop {
                 .filter(e -> e.getName().equals(name))
                 .findFirst();
 
-        if (optionalProduct.isPresent()) {
-            Product product = optionalProduct.get();
-
-            cart.getUserProducts().add(product);
+        optionalProduct.ifPresentOrElse((product) -> {
+            cart.addProduct(product);
             shopStorage.getProducts().remove(product);
-
             System.out.println("Product added to the cart\n");
-        } else {
-            System.out.println("Wrong input\n");
-        }
+        }, () -> System.out.println("Wrong input\n"));
+
     }
 
     protected abstract void displayCart();
