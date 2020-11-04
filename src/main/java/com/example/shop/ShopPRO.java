@@ -24,9 +24,7 @@ public class ShopPRO extends Shop {
         System.out.println("Your products:");
         util.displayProducts(cart.getUserProducts());
 
-        double totalValue = cart.getUserProducts().stream()
-                .map(Product::getPrice)
-                .reduce(0.0, Double::sum);
+        double totalValue = cart.getTotalValue();
 
         System.out.printf("Total value of products is: %.2f\n\n", totalValue);
 
